@@ -1,0 +1,61 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: dev-mysql
+    profiles: ["mysql"]
+    mem_limit: 400m
+    cpus: 0.5
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devdb
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: dev-postgres
+    profiles: ["postgres"]
+    mem_limit: 350m
+    cpus: 0.5
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpass
+      POSTGRES_DB: devdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:6-jammy
+    container_name: dev-mongo
+    profiles: ["mongo"]
+    mem_limit: 500m
+    cpus: 0.5
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: dev-redis
+    profiles: ["redis"]
+    mem_limit: 200m
+    cpus: 0.25
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
