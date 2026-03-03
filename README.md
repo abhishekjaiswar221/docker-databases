@@ -52,7 +52,7 @@ database: devdb
 
 #### Connecting via Adminer Web Client
 
-Note: Running on http://localhost:8080
+Note: Running on http://localhost:9090
 
 ```bash
 System: MySQL/MariaDB
@@ -78,7 +78,7 @@ database: devdb
 
 #### Connecting via Adminer Web Client
 
-Note: Running on http://localhost:8081
+Note: Running on http://localhost:9091
 
 ```bash
 System: PostgreSQL
@@ -100,7 +100,7 @@ mongodb://root:root@localhost:27017
 
 #### Connecting via Mongo Express Web Client
 
-Note: Running on http://localhost:8082
+Note: Running on http://localhost:9092
 
 Username: admin &
 Password: pass
@@ -119,7 +119,7 @@ redis://localhost:6379
 
 #### Connecting via Redis Commander Web Client
 
-Note: Running on http://localhost:8083
+Note: Running on http://localhost:9093
 
 ```bash
 redis://localhost:6379
