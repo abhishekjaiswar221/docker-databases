@@ -12,6 +12,8 @@ docker compose --profile mysql up -d
 
 ### 🐘 Run PostgreSQL Container
 
+Note: Delete the .gitkeep file in the /data/postgres directory before running this command.
+
 ```bash
 docker compose --profile postgres up -d
 ```
@@ -28,15 +30,17 @@ docker compose --profile mongo up -d
 docker compose --profile redis up -d
 ```
 
-### 🛑 Stop All Running Containers
+### 🛑 Stop Running Container
 
 ```bash
-docker compose down
+docker compose --profile [profile] down
 ```
 
 ## 🔌 Database Connection Details
 
 ### 🐬 MySQL
+
+#### Connecting via Database Client
 
 ```bash
 host: localhost
@@ -46,7 +50,23 @@ password: devpass
 database: devdb
 ```
 
+#### Connecting via Adminer Web Client
+
+Note: Running on http://localhost:8080
+
+```bash
+System: MySQL/MariaDB
+server: mysql
+host: localhost
+port: 3306
+user: devuser
+password: devpass
+database: devdb
+```
+
 ### 🐘 PostgreSQL
+
+#### Connecting via Database Client
 
 ```bash
 host: localhost
@@ -56,13 +76,50 @@ password: devpass
 database: devdb
 ```
 
+#### Connecting via Adminer Web Client
+
+Note: Running on http://localhost:8081
+
+```bash
+System: PostgreSQL
+server: postgres
+host: localhost
+port: 5432
+user: devuser
+password: devpass
+database: devdb
+```
+
 ### 🍃 MongoDB
+
+#### Connecting via Database Client
+
+```bash
+mongodb://root:root@localhost:27017
+```
+
+#### Connecting via Mongo Express Web Client
+
+Note: Running on http://localhost:8082
+
+Username: admin &
+Password: pass
 
 ```bash
 mongodb://root:root@localhost:27017
 ```
 
 ### ⚡ Redis
+
+#### Connecting via Database Client
+
+```bash
+redis://localhost:6379
+```
+
+#### Connecting via Redis Commander Web Client
+
+Note: Running on http://localhost:8083
 
 ```bash
 redis://localhost:6379
