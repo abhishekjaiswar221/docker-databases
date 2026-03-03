@@ -14,7 +14,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - database-network
+      - mysql-network
     volumes:
       - ./data/mysql:/var/lib/mysql
 
@@ -26,7 +26,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - database-network
+      - mysql-network
 
   postgres:
     image: postgres:15-alpine
@@ -42,7 +42,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - database-network
+      - postgres-network
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
@@ -54,7 +54,7 @@ services:
     ports:
       - "8081:8080"
     networks:
-      - database-network
+      - postgres-network
 
   mongo:
     image: mongo:6-jammy
@@ -69,7 +69,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - database-network
+      - mongo-network
     volumes:
       - ./data/mongo:/data/db
 
@@ -85,7 +85,7 @@ services:
     ports:
       - "8082:8081"
     networks:
-      - database-network
+      - mongo-network
 
   redis:
     image: redis:7-alpine
@@ -98,7 +98,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - database-network
+      - redis-network
     volumes:
       - ./data/redis:/data
 
@@ -112,8 +112,14 @@ services:
     ports:
       - "8083:8081"
     networks:
-      - database-network
+      - redis-network
 
 networks:
-  database-network:
-    name: database-network
+  mysql-network:
+    name: mysql-network
+  postgres-network:
+    name: postgres-network
+  mongo-network:
+    name: mongo-network
+  redis-network:
+    name: redis-network
