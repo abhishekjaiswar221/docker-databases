@@ -16,6 +16,14 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
 
+  mysql-adminer:
+    image: adminer:latest
+    container_name: dev-adminer-mysql
+    profiles: ["mysql"]
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
   postgres:
     image: postgres:15-alpine
     container_name: dev-postgres
@@ -32,6 +40,14 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
+  postgres-adminer:
+    image: adminer:latest
+    container_name: dev-adminer-postgres
+    profiles: ["postgres"]
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+
   mongo:
     image: mongo:6-jammy
     container_name: dev-mongo
@@ -47,6 +63,18 @@ services:
     volumes:
       - ./data/mongo:/data/db
 
+  mongo-express:
+    image: mongo-express:latest
+    container_name: dev-mongo-express
+    profiles: ["mongo"]
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: mongo
+    ports:
+      - "8082:8081"
+
   redis:
     image: redis:7-alpine
     container_name: dev-redis
@@ -59,3 +87,13 @@ services:
       - "6379:6379"
     volumes:
       - ./data/redis:/data
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: dev-redis-commander
+    profiles: ["redis"]
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "8083:8081"
