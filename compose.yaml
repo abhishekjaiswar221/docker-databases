@@ -83,7 +83,7 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
       ME_CONFIG_MONGODB_SERVER: mongo
     ports:
-      - "9092:8080"
+      - "9092:8081"
     networks:
       - mongo-network
 
@@ -110,7 +110,7 @@ services:
     environment:
       REDIS_HOSTS: local:redis:6379
     ports:
-      - "9093:8080"
+      - "9093:8081"
     networks:
       - redis-network
 
