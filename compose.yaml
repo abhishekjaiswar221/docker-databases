@@ -13,6 +13,8 @@ services:
       MYSQL_PASSWORD: devpass
     ports:
       - "3306:3306"
+    networks:
+      - database-network
     volumes:
       - ./data/mysql:/var/lib/mysql
 
@@ -23,6 +25,8 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
+    networks:
+      - database-network
 
   postgres:
     image: postgres:15-alpine
@@ -37,6 +41,8 @@ services:
       POSTGRES_DB: devdb
     ports:
       - "5432:5432"
+    networks:
+      - database-network
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
@@ -47,6 +53,8 @@ services:
     restart: unless-stopped
     ports:
       - "8081:8080"
+    networks:
+      - database-network
 
   mongo:
     image: mongo:6-jammy
@@ -60,6 +68,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
+    networks:
+      - database-network
     volumes:
       - ./data/mongo:/data/db
 
@@ -74,6 +84,8 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongo
     ports:
       - "8082:8081"
+    networks:
+      - database-network
 
   redis:
     image: redis:7-alpine
@@ -85,6 +97,8 @@ services:
     command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
     ports:
       - "6379:6379"
+    networks:
+      - database-network
     volumes:
       - ./data/redis:/data
 
@@ -97,3 +111,9 @@ services:
       REDIS_HOSTS: local:redis:6379
     ports:
       - "8083:8081"
+    networks:
+      - database-network
+
+networks:
+  database-network:
+    name: database-network
