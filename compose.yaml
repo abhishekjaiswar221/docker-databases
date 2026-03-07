@@ -1,7 +1,7 @@
 services:
   # MySQL
   mysql:
-    image: mysql:8.1
+    image: mysql:8.0
     container_name: dev-mysql
     profiles: ["mysql"]
     mem_limit: 400m
