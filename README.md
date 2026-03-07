@@ -30,10 +30,16 @@ docker compose --profile mongo up -d
 docker compose --profile redis up -d
 ```
 
-### 🛑 Stop Running Container
+### 🗑️ Remove Running Container
 
 ```bash
 docker compose --profile [profile] down
+```
+
+### 🛑 Start/Stop Running Container
+
+```bash
+docker compose --profile [profile] start/stop
 ```
 
 ## 🔌 Database Connection Details
