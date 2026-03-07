@@ -1,6 +1,7 @@
 services:
+  # MySQL
   mysql:
-    image: mysql:8.0
+    image: mysql:8.1
     container_name: dev-mysql
     profiles: ["mysql"]
     mem_limit: 400m
@@ -28,8 +29,9 @@ services:
     networks:
       - mysql-network
 
+  # PostgreSQL
   postgres:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: dev-postgres
     profiles: ["postgres"]
     mem_limit: 350m
@@ -56,8 +58,9 @@ services:
     networks:
       - postgres-network
 
+  # MongoDB
   mongo:
-    image: mongo:6-jammy
+    image: mongo:7.0-jammy
     container_name: dev-mongo
     profiles: ["mongo"]
     mem_limit: 500m
@@ -87,8 +90,9 @@ services:
     networks:
       - mongo-network
 
+  # Redis
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine
     container_name: dev-redis
     profiles: ["redis"]
     mem_limit: 200m
