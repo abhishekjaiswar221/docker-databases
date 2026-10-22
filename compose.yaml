@@ -18,9 +18,18 @@ services:
       - mysql-network
     volumes:
       - ./data/mysql:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -p$$MYSQL_ROOT_PASSWORD --silent",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   mysql-adminer:
-    image: adminer:latest
+    image: adminer:4
     container_name: dev-adminer-mysql
     profiles: ["mysql"]
     restart: unless-stopped
@@ -28,6 +37,9 @@ services:
       - "9090:8080"
     networks:
       - mysql-network
+    depends_on:
+      mysql:
+        condition: service_healthy
 
   # PostgreSQL
   postgres:
@@ -47,9 +59,14 @@ services:
       - postgres-network
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   postgres-adminer:
-    image: adminer:latest
+    image: adminer:4
     container_name: dev-adminer-postgres
     profiles: ["postgres"]
     restart: unless-stopped
@@ -57,6 +74,9 @@ services:
       - "9091:8080"
     networks:
       - postgres-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # MongoDB
   mongo:
@@ -75,9 +95,15 @@ services:
       - mongo-network
     volumes:
       - ./data/mongo:/data/db
+    healthcheck:
+      test:
+        ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   mongo-express:
-    image: mongo-express:latest
+    image: mongo-express:1
     container_name: dev-mongo-express
     profiles: ["mongo"]
     restart: unless-stopped
@@ -89,6 +115,9 @@ services:
       - "9092:8081"
     networks:
       - mongo-network
+    depends_on:
+      mongo:
+        condition: service_healthy
 
   # Redis
   redis:
@@ -105,6 +134,11 @@ services:
       - redis-network
     volumes:
       - ./data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   redis-commander:
     image: rediscommander/redis-commander:latest
@@ -117,6 +151,9 @@ services:
       - "9093:8081"
     networks:
       - redis-network
+    depends_on:
+      redis:
+        condition: service_healthy
 
 networks:
   mysql-network:
